@@ -12,7 +12,7 @@
 #
 # > install.packages("ggmap")
 
-# Retrieving lines from Postgree
+# Retrieving geom lines from Postgree
 setwd("/home/joao/projects/master-degree/database-gis-extractor")
 require(RPostgreSQL)
 drv <- dbDriver("PostgreSQL")
@@ -23,11 +23,11 @@ if(dbExistsTable(con, "linhas")) {
 dbDisconnect(con)
 dbUnloadDriver(drv)
 
-# Plot a route
+# Plot geom in a route
 library(ggmap)
 source("convert_line_string_to_data_frame.R")
 options(digits = 10)
-route_index = 400
+route_index = 1
 route <- convertLineStringToDataFrame(ds_linhas$id[route_index], ds_linhas$name[route_index], ds_linhas$st_astext[route_index])
 map_jille = get_map(location = c(lon = mean(route$lng), lat = mean(route$lat)), zoom = 13, maptype = 'roadmap')
 map_jille_graph = ggmap(map_jille)

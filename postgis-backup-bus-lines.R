@@ -12,7 +12,7 @@
 #
 # > install.packages("ggmap")
 
-# Retrieving lines from Postgree
+# Retrieving geom lines from Postgree
 setwd("/home/joao/projects/master-degree/database-gis-extractor")
 require(RPostgreSQL)
 drv <- dbDriver("PostgreSQL")
@@ -23,12 +23,12 @@ if(dbExistsTable(con, "linhas")) {
 dbDisconnect(con)
 dbUnloadDriver(drv)
 
-# Plot a route
+# Plot geom line in a route
 source("convert_line_string_to_data_frame.R")
 options(digits = 10)
 for(route_index in 1:dim(ds_linhas)[1]) {
     route_id <- ds_linhas$id[route_index]
     route_name <- gsub("/", "to", ds_linhas$name[route_index])
     route <- convertLineStringToDataFrame(route_id, route_name, ds_linhas$st_astext[route_index])
-    write.csv(x = route, file = paste("bus_lines/", route_id, " - ", route_name, ".csv", sep = ""), row.names = FALSE)    
+    write.csv(x = route, file = paste("bus_lines/", route_id, " - ", route_name, ".csv", sep = ""), row.names = FALSE)
 }
